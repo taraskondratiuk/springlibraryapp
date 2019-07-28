@@ -1,13 +1,21 @@
 package ua.gladiator.libraryapp.model.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 @Table(name = "books")
 public class Book {
     @Id
@@ -29,13 +37,69 @@ public class Book {
     @Column(name = "days_to_return")
     private Integer daysToReturn;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @Column(name = "pic_url")
+    private String picUrl;
+
+    @NotEmpty
+    @Basic(optional = false)
+    @Column(name = "is_available")
+    @ColumnDefault("1")
+    private Boolean isAvailable;
+
+    @NotEmpty
+    @Basic(optional = false)
+    @Column(name = "add_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate addDate;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "books_attributes",
             joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "attribute"))
-    Set<Attribute> attributes;
+            inverseJoinColumns = @JoinColumn(name = "attribute_id"))
+    private Set<Attribute> attributes;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-    Set<BookUser> issues;
+    private Set<Take> takes;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Integer getDaysToReturn() {
+        return daysToReturn;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public LocalDate getAddDate() {
+        return addDate;
+    }
+
+    public Set<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    @JsonIgnore
+    public Set<Take> getTakes() {
+        return takes;
+    }
 }

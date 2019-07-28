@@ -1,18 +1,24 @@
 package ua.gladiator.libraryapp.model.entity;
 
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import ua.gladiator.libraryapp.model.entity.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.*;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", unique = true)
@@ -23,50 +29,48 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @Column(name = "phone_number", unique = true)
     private Integer phoneNumber;
 
-    @NotEmpty
+
     @Basic(optional = false)
     private String password;
 
-    @NotEmpty
-    @Basic(optional = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "role_id")})
+    private List<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    Set<BookUser> issues;
+    Set<Take> takes;
 
-    @Override
-    public String getUsername() {
-        return getEmail();
+
+    public Long getId() {
+        return id;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(getRole());
+    public String getEmail() {
+        return email;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public Integer getPhoneNumber() {
+        return phoneNumber;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    @JsonIgnore
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
+    @JsonIgnore
+    public Set<Take> getTakes() {
+        return takes;
     }
 }

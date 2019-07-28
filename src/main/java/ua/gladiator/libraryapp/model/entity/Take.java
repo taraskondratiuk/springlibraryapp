@@ -1,20 +1,22 @@
 package ua.gladiator.libraryapp.model.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name = "books_users")
-public class BookUser {
+@Builder
+public class Take {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_issue_id")
+    @Column(name = "take_id")
     private Long id;
 
     @NotEmpty
@@ -33,7 +35,7 @@ public class BookUser {
     @Basic(optional = false)
     @Column(name = "return_deadline")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime returnDeadline;
+    private LocalDate returnDeadline;
 
     @NotEmpty
     @Basic(optional = false)
