@@ -1,0 +1,28 @@
+{
+
+  "message.title": "Library",
+  "message.logout": "Logout",
+  "message.address": "Office address",
+  "message.kyiv": "Kyiv",
+  "message.street": "Pupy 44 Street",
+  "message.cont": "Our contacts",
+  "message.phone1": "+38(093)-666-14-88",
+  "message.phone2": "+38(067)-567-34-34",
+  "message.sponsors": "Our sponsors",
+  "message.sponsor1": "Butkevych Vova",
+  "message.sponsor2": "Bryzh Nikita",
+  "message.inc": "Developed by Anime inc.",
+  "message.allrr": "All rights reseved",
+  "message.take": "Take book",
+  "message.daystoreturn": "Days to return: $1",
+  "message.author": "Author",
+  "message.remove": "Remove",
+  "message.page": "Page",
+  "message.mainpage": "Main page",
+  "message.stats": "Taken books",
+  "message.filter": "Filter by:",
+  "message.all": "All",
+  "message.returned": "Returned",
+  "message.unreturned": "Unreturned",
+  "message.nameauthor": "Book name: $1   Author: $1"
+}

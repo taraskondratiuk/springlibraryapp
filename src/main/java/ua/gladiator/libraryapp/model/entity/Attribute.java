@@ -1,9 +1,7 @@
 package ua.gladiator.libraryapp.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,6 +12,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@ToString
 public class Attribute {
 
     @Id
@@ -23,19 +23,19 @@ public class Attribute {
 
 
     @NotEmpty
-    @Column(unique = true, nullable = false)
-    private String attribute;
+    @Column(unique = true, nullable = false, name = "attribute")
+    private String name;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "attributes", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "attributes", cascade = CascadeType.MERGE)
     private Set<Book> books;
 
     public Long getId() {
         return id;
     }
 
-    public String getAttribute() {
-        return attribute;
+    public String getName() {
+        return name;
     }
 
     @JsonIgnore

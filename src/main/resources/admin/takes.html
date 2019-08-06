@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Library</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+<section class="section-1 head_wrapper">
+    <header class="header container">
+        <div class="headline row ">
+            <div class="logo col-lg-2">
+                <img class="logo-img" src="../static/sources/book-logo.png" alt="logo">
+            </div>
+            <div class="head_info col-lg-12">
+                <h1 class="translate" data-args="message.title"></h1>
+            </div>
+            <div class="col-lg-2 langs">
+                <div class="switch-locale lang-images">
+                    <a href="#" data-locale="en"><img src="../static/sources/us-flag.png" alt="en"></a>
+                    <a href="#" data-locale="ua"><img src="../static/sources/ua-flag.png" alt="ua"></a></div>
+                <a href="/logout">
+                    <button type="button" class="btn btn-info btn-sm logout-button translate"
+                            data-args="message.logout">
+
+                    </button>
+                </a>
+            </div>
+        </div>
+        <nav class="navigation">
+
+            <div class="row menu_row">
+
+                <div class="col-lg-offset-6 col-lg-2 menu-item center-text">
+                    <a class="nav-link" href="file:///D:/1PROGA/libraryapp/src/main/resources/admin/books.html"><h3 class="translate" data-args="message.mainpage"></h3></a>
+                </div>
+                <div class="col-lg-2  menu-item center-text">
+                    <a class="nav-link" href="#"><h3 class="translate" data-args="message.stats"></h3></a>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+</section>
+
+<section class="page-wrapper container">
+
+    <div class="row">
+        <div class="takes-filter col-lg-4">
+            <div class="form-horizontal filter-form col-lg-12">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <!--<legend>filter</legend>-->
+
+                    <!-- Search input-->
+
+                        <h3 class="center-text translate" data-args="message.filter"></h3>
+                    <div class="form-group col-lg-16 input-field-my">
+                            <select id="returned" class="takes-select form-control">
+                                <option value="" class="form-control translate" data-args="message.all"></option>
+                                <option value="true" class="form-control translate" data-args="message.returned"></option>
+                                <option value="false" class="form-control translate" data-args="message.unreturned"></option>
+                            </select>
+
+
+                    </div>
+
+                    <!-- Search input-->
+                    <div class="form-group col-lg-16 input-field-my">
+                        <div class="">
+                            <input id="email" type="search" class="form-control input-md" placeholder="Reader email">
+                        </div>
+                    </div>
+
+                    <!-- Multiple Checkboxes -->
+
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label" for="filter-button"></label>
+                        <div class="col-lg-4">
+                            <button id="filter-button" name="filter-button" class="btn btn-info">confirm</button>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="takes" class="row">
+
+
+            </div>
+
+        </div>
+    </div>
+    <div id="pager" class="col-lg-offset-4">
+
+    </div>
+
+
+
+
+
+
+
+
+</section>
+
+<footer class="footer">
+    <div class="foot container">
+        <div class="footer_info col-lg-4 ">
+            <ul>
+                <li class="translate bold" data-args="message.address"></li>
+                <li class="translate" data-args="message.kyiv"></li>
+                <li class="translate" data-args="message.street"></li>
+            </ul>
+        </div>
+        <div class="footer_info col-lg-4 ">
+            <ul>
+                <li class="translate bold" data-args="message.cont"></li>
+                <li class="translate" data-args="message.phone1"></li>
+                <li class="translate" data-args="message.phone2"></li>
+            </ul>
+        </div>
+        <div class="footer_info col-lg-4 ">
+            <ul>
+                <li class="translate bold" data-args="message.sponsors"></li>
+                <li class="translate" data-args="message.sponsor1"></li>
+                <li class="translate" data-args="message.sponsor2"></li>
+            </ul>
+        </div>
+        <div class="footer_info col-lg-4 ">
+            <ul>
+
+                <li class="translate bold" data-args="message.inc"></li>
+                <li class="translate bold" data-args="message.allrr"></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="../static/js/lib/jquery-3.4.1.min/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/js/lib/mustache.min/mustache.min.js"></script>
+
+<script type="text/javascript" src="../static/js/lib/CLDRPluralRuleParser/CLDRPluralRuleParser.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.messagestore.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.fallbacks.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.language.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.parser.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.emitter.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
+<script type="text/javascript" src="../static/js/lib/history/jquery.history.js"></script>
+<script type="text/javascript" src="../static/js/lib/url/url.min.js"></script>
+
+<script type="text/javascript" src="../static/js/takes.js"></script>
+<script type="text/javascript" src="../static/js/locale.js"></script>
+</body>
+
+
+
+</html>

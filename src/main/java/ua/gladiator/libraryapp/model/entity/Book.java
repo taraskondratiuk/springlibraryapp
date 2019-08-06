@@ -1,14 +1,13 @@
 package ua.gladiator.libraryapp.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -16,6 +15,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@ToString
+@Builder
 @Table(name = "books")
 public class Book {
     @Id
@@ -25,14 +26,17 @@ public class Book {
 
     private String author;
 
+    @NotEmpty
+    @Basic(optional = false)
     private String name;
 
+    //todo international db
     @NotEmpty
     @Basic(optional = false)
     @Lob
     private String text;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @Column(name = "days_to_return")
     private Integer daysToReturn;
@@ -40,19 +44,17 @@ public class Book {
     @Column(name = "pic_url")
     private String picUrl;
 
-    @NotEmpty
     @Basic(optional = false)
     @Column(name = "is_available")
     @ColumnDefault("1")
     private Boolean isAvailable;
 
-    @NotEmpty
     @Basic(optional = false)
     @Column(name = "add_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate addDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "books_attributes",
             joinColumns = @JoinColumn(name = "book_id"),

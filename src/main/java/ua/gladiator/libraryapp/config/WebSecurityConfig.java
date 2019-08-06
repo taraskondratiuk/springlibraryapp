@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import ua.gladiator.libraryapp.security.JwtConfigurer;
 import ua.gladiator.libraryapp.security.JwtProvider;
 
 @Configuration
@@ -20,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${server.servlet.context-path}")
     private static String CONTEXT_PATH;
 
-    private static String ADMIN_ENDPOINT =  "/admin/**";
+    private static String ADMIN_ENDPOINT = "/admin/**";
     private static String READER_ENDPOINT =  "/reader/**";
     private static String ACCOUNT_ENDPOINT =  "/lib/auth/**";
 
@@ -43,9 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().disable()
+                .csrf().disable()//todo check for js and css
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                ;
+               /* .and()
 
                 .authorizeRequests()
 
@@ -55,6 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtProvider));
+                .apply(new JwtConfigurer(jwtProvider));*/
     }
 }

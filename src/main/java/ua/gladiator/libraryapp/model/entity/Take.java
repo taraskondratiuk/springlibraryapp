@@ -1,7 +1,9 @@
 package ua.gladiator.libraryapp.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +15,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "books_users")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Take {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +34,16 @@ public class Take {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @NotEmpty
+    @Basic(optional = false)
+    @Column(name = "take_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate takeDate;
+
+    @Column(name = "return_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate returnDate;
 
     @NotEmpty
     @Basic(optional = false)

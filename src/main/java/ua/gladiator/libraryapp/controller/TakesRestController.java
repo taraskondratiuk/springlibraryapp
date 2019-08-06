@@ -1,5 +1,6 @@
 package ua.gladiator.libraryapp.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,10 +11,10 @@ import ua.gladiator.libraryapp.model.service.impl.UserServiceImpl;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
 
 @RestController
-@RequestMapping(value = {"/reader/takes"})
+@RequestMapping("/takes")
 public class TakesRestController {
 
     @Resource
@@ -23,11 +24,21 @@ public class TakesRestController {
     private UserServiceImpl userServiceImpl;
 
 
-    @GetMapping
+    @GetMapping(path = "/my")
     public ResponseEntity<List<Take>> getMyTakes() {
         //todo
         return new ResponseEntity<>(takeServiceImpl.getActiveTakesByUserId(userServiceImpl.getCurrentUser().getId()), HttpStatus.OK);
     }
+
+
+    @GetMapping
+    public ResponseEntity<Page<Take>> getFilteredTakes(@RequestParam(required = false, defaultValue = "") Boolean returned,
+                                                       @RequestParam(required = false, defaultValue = "1") Integer page,
+                                                       @RequestParam(required = false, defaultValue = "") Long id,
+                                                       @RequestParam(required = false, defaultValue = "") String email) {
+        return new ResponseEntity<>(takeServiceImpl.getFilteredTakes(returned, id, email, page), HttpStatus.OK);
+    }
+
 
     @PutMapping
     public ResponseEntity<List<Take>> returnBook(@Valid @RequestBody Take take) {

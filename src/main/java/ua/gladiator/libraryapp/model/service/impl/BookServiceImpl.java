@@ -1,58 +1,54 @@
 package ua.gladiator.libraryapp.model.service.impl;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ua.gladiator.libraryapp.model.entity.Attribute;
 import ua.gladiator.libraryapp.model.entity.Book;
+import ua.gladiator.libraryapp.model.entity.dto.BookDto;
 import ua.gladiator.libraryapp.model.exception.BookNotFoundException;
+import ua.gladiator.libraryapp.model.repository.AttributeRepository;
 import ua.gladiator.libraryapp.model.repository.BookRepository;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class BookServiceImpl {
 
     @Resource
+    private AttributeRepository attributeRepository;
+
+    @Resource
     private BookRepository bookRepository;
 
+    @Value("${page.size.books}")
+    private Integer DEFAULT_BOOKS_PAGE_SIZE;
 
-    public Set<Book> getBooksByAttributes(List<String> attributes) {
-        Set<Book> books = new HashSet<>();
-        attributes.forEach(v -> books.addAll(bookRepository.findAllByAttributes_AttributeIs(v)));
-        return books;
-        //todo
+
+    public Book addBook(BookDto bookDto) {
+        return bookRepository.save(
+                Book.builder()
+                .addDate(LocalDate.now())
+                .attributes(attributeRepository.findAllByNameIn(bookDto.getAttributes()))
+                .author(bookDto.getAuthor())
+                .daysToReturn(bookDto.getDaysToReturn())
+                .isAvailable(true)
+                .name(bookDto.getName())
+                .picUrl(bookDto.getPicUrl())
+                .text(bookDto.getText())
+                .build());
     }
-
-    public Set<Book> getBooksByTextOrName(String text) {
-        return Stream.concat(
-                bookRepository.findAllByTextIgnoreCaseContaining(text).stream(),
-                bookRepository.findAllByNameIgnoreCaseContaining(text).stream())
-                .collect(Collectors.toSet());
-        //todo rework
-    }
-
-    public List<Book> getBooksByAuthor(String author) {
-        return  bookRepository.findAllByAuthorIgnoreCaseContaining(author);
-    }
-
-    public Book addBook(Book book) {
-        return bookRepository.save(book);
-    }
-
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
-    }
-
-
 
     public Book updateBook(Book newBook) {
         Book oldBook = bookRepository
                 .findById(newBook.getId())
                 .orElseThrow(BookNotFoundException::new);
-
 
             oldBook.setAttributes(newBook.getAttributes());
             oldBook.setAuthor(newBook.getAuthor());
@@ -70,19 +66,25 @@ public class BookServiceImpl {
         bookRepository.delete(book);
     }
 
-    public List<Book> getBooksByParams(List<String> attributes, String line, String author) {
-        List<Book> books = bookRepository.findAllByIsAvailableTrue();
+    public Page<Book> getBooksByParams(List<String> attributes, String line, String author, Integer pageNum) {
+        if (attributes == null) {
+            attributes = attributeRepository
+                    .findAll()
+                    .stream()
+                    .map(Attribute::getName)
+                    .collect(Collectors.toList());
+        }
+        Pageable pageable = PageRequest.of(pageNum - 1, DEFAULT_BOOKS_PAGE_SIZE, Sort.by("id").descending());
 
-        if (attributes != null) {
-            books.retainAll(getBooksByAttributes(attributes));
-        }
-        if (line != null) {
-            books.retainAll(getBooksByTextOrName(line));
-        }
-        if (author != null) {
-            books.retainAll(getBooksByAuthor(author));
-        }
+        return bookRepository.findDistinctByAttributes_NameInAndAuthorIgnoreCaseContainingAndTextIgnoreCaseContainingAndNameIgnoreCaseContainingAndIsAvailableTrue(
+                attributes,
+                author,
+                line,
+                line,
+                pageable);
+    }
 
-        return books;
+    public Book addBookDto(BookDto bookDto) {
+        return null;
     }
 }
