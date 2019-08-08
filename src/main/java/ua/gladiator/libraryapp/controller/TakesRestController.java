@@ -40,10 +40,9 @@ public class TakesRestController {
     }
 
 
-    @PutMapping
-    public ResponseEntity<List<Take>> returnBook(@Valid @RequestBody Take take) {
-        takeServiceImpl.makeTakeReturned(take);
-        return new ResponseEntity<>(takeServiceImpl.getActiveTakesByUserId(userServiceImpl.getCurrentUser().getId()), HttpStatus.OK);
+    @PutMapping("/return/{id}")
+    public ResponseEntity<Take> returnBook(@PathVariable Long id) {
+        return new ResponseEntity<>(takeServiceImpl.makeTakeReturned(id), HttpStatus.OK);
     }
 
     @PostMapping

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ua.gladiator.libraryapp.model.entity.Book;
 import ua.gladiator.libraryapp.model.entity.Take;
 import ua.gladiator.libraryapp.model.entity.User;
+import ua.gladiator.libraryapp.model.exception.TakeNotFoundException;
 import ua.gladiator.libraryapp.model.repository.BookRepository;
 import ua.gladiator.libraryapp.model.repository.TakeRepository;
 
@@ -42,9 +43,19 @@ return null;
    // }
     //todo throw exc
 
-    public Take makeTakeReturned(Take take) {
+    public Take makeTakeReturned(Long id) {
+
+        Take take = takeRepository.findById(id)
+                .orElseThrow(TakeNotFoundException::new);
+
         take.setIsReturned(true);
         take.setReturnDate(LocalDate.now());
+
+        Book book = take.getBook();
+
+        book.setIsAvailable(true);
+        bookRepository.save(book);
+
         return takeRepository.save(take);
     }
 //todo test expire date

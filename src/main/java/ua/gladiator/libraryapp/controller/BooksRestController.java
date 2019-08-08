@@ -22,23 +22,21 @@ public class BooksRestController {
 
 
     @GetMapping
-    public ResponseEntity<Page<Book>> getBooksWithFilter(@RequestParam(required = false) List<String> attribute,
+    public ResponseEntity<Page<Book>> getAvailableBooksWithFilter(@RequestParam(required = false) List<String> attributes,
                                                          @RequestParam(required = false, defaultValue = "") String line,
                                                          @RequestParam(required = false, defaultValue = "") String author,
                                                          @RequestParam(required = false, defaultValue = "1") Integer page) {
-        return new ResponseEntity<>(bookServiceImpl.getBooksByParams(attribute, line, author, page), HttpStatus.OK);
+        return new ResponseEntity<>(bookServiceImpl.getBooksByParams(attributes, line, author, page), HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Book> addBook(@Valid @RequestBody BookDto bookDto) {
-        System.out.println("skadjflkasdjflkasdj");
-        System.out.println(bookDto);
-
         return new ResponseEntity<>(bookServiceImpl.addBook(bookDto), HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<Book> updateBook(@Valid @RequestBody Book book) {
-        return new ResponseEntity<>(bookServiceImpl.updateBook(book), HttpStatus.OK);
+    @PutMapping("/take/{id}")
+    public ResponseEntity<Book> takeBook(@PathVariable Long id) {
+        System.out.println(123);
+        return new ResponseEntity<>(bookServiceImpl.takeBook(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

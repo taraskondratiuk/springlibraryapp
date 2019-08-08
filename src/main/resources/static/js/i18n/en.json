@@ -1,5 +1,4 @@
 {
-
   "message.title": "Library",
   "message.logout": "Logout",
   "message.address": "Office address",
@@ -18,11 +17,24 @@
   "message.author": "Author",
   "message.remove": "Remove",
   "message.page": "Page",
-  "message.mainpage": "Main page",
+  "message.mainpage": "Available books",
   "message.stats": "Taken books",
   "message.filter": "Filter by:",
   "message.all": "All",
   "message.returned": "Returned",
   "message.unreturned": "Unreturned",
-  "message.nameauthor": "Book name: $1   Author: $1"
+  "message.nothingfound": "Nothing was found",
+  "message.text": "Text",
+  "message.picurl": "Picture url",
+  "message.name": "Name",
+  "message.create": "Create book",
+  "message.createatt": "Create attribute",
+  "message.att": "Attribute",
+  "message.days": "Days to return",
+  "message.add": "Add",
+  "message.confirm": "Confirm",
+  "message.takedead": "Take date: $1<br>Return deadline: $1",
+  "message.nameauthor": "Book name: $1<br>Author: $1",
+  "message.returndate": "Return date: $1",
+  "message.emailphone": "Reader email: $1<br>Reader phone: $1"
 }

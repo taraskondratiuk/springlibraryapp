@@ -9,9 +9,6 @@ import ua.gladiator.libraryapp.model.entity.Take;
 
 @Repository
 public interface TakeRepository extends PagingAndSortingRepository<Take, Long> {
-    @Query("SELECT t FROM Take t WHERE (:isReturned IS NULL OR t.isReturned =: isReturned) AND (:id IS NULL OR t.user.id =:id) AND (t.user.email LIKE %:email%)")
+    @Query("SELECT t FROM Take t WHERE (:isReturned IS NULL OR t.isReturned =: isReturned) AND (:id IS NULL OR t.user.id =:id) AND (t.user.email LIKE %:email%) ORDER BY t.id DESC")
     Page<Take> findAllByUser_IdAndIsReturned(Long id, Boolean isReturned, String email, Pageable pageable);
-    Page<Take> findAllByUser_Id(Long id, Pageable pageable);
-    Page<Take> findAllByIsReturned(Boolean isReturned, Pageable pageable);
-    Page<Take> findAllByUser_IdAndIsReturnedFalse(Long id, Pageable pageable);
 }

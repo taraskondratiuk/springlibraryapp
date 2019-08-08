@@ -8,10 +8,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ua.gladiator.libraryapp.model.entity.Attribute;
 import ua.gladiator.libraryapp.model.entity.Book;
+import ua.gladiator.libraryapp.model.entity.Take;
 import ua.gladiator.libraryapp.model.entity.dto.BookDto;
 import ua.gladiator.libraryapp.model.exception.BookNotFoundException;
 import ua.gladiator.libraryapp.model.repository.AttributeRepository;
 import ua.gladiator.libraryapp.model.repository.BookRepository;
+import ua.gladiator.libraryapp.model.repository.TakeRepository;
+import ua.gladiator.libraryapp.model.repository.UserRepository;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -26,6 +29,12 @@ public class BookServiceImpl {
 
     @Resource
     private BookRepository bookRepository;
+
+    @Resource
+    private TakeRepository takeRepository;
+
+    @Resource
+    private UserRepository userRepository;
 
     @Value("${page.size.books}")
     private Integer DEFAULT_BOOKS_PAGE_SIZE;
@@ -45,19 +54,23 @@ public class BookServiceImpl {
                 .build());
     }
 
-    public Book updateBook(Book newBook) {
+    public Book takeBook(Long id) {
         Book oldBook = bookRepository
-                .findById(newBook.getId())
+                .findByIdAndIsAvailableTrue(id)
                 .orElseThrow(BookNotFoundException::new);
 
-            oldBook.setAttributes(newBook.getAttributes());
-            oldBook.setAuthor(newBook.getAuthor());
-            oldBook.setDaysToReturn(newBook.getDaysToReturn());
-            oldBook.setIsAvailable(newBook.getAvailable());
-            oldBook.setTakes(newBook.getTakes());
-            oldBook.setName(newBook.getName());
-            oldBook.setPicUrl(newBook.getPicUrl());
-            oldBook.setText(newBook.getText());
+
+            oldBook.setIsAvailable(false);
+            //todo add current user
+
+
+        takeRepository.save(Take.builder()
+                .takeDate(LocalDate.now())
+                .isReturned(false)
+                .returnDeadline(LocalDate.now().plusDays(oldBook.getDaysToReturn()))
+                .user(userRepository.findById(3L).get())
+                .book(oldBook)
+                .build());
             return bookRepository.save(oldBook);
     }
 

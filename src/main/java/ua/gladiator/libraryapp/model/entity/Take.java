@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -23,19 +23,19 @@ public class Take {
     @Column(name = "take_id")
     private Long id;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @Column(name = "take_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -45,13 +45,13 @@ public class Take {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @Column(name = "return_deadline")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate returnDeadline;
 
-    @NotEmpty
+    @NotNull
     @Basic(optional = false)
     @ColumnDefault("0")
     @Column(name = "is_returned")
