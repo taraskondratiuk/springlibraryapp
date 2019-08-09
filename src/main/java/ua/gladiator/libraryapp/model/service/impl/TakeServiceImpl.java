@@ -15,7 +15,6 @@ import ua.gladiator.libraryapp.model.repository.TakeRepository;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.*;
 
 @Service
 public class TakeServiceImpl {
@@ -29,18 +28,8 @@ public class TakeServiceImpl {
     @Resource
     private BookRepository bookRepository;
 
-    public List<Take> getAllTakesByUserId(Long id) {
-        return null;//takeRepository.findAllByUser_Id(id);
-    }
 
-    public List<Take> getActiveTakesByUserId(Long id) {
-return null;
-    }
 
-    //todo maybe add more stats
-    //public List<Take> getAllActiveTakes() {
-      //  return takeRepository.findAllByIsReturnedFalse();
-   // }
     //todo throw exc
 
     public Take makeTakeReturned(Long id) {

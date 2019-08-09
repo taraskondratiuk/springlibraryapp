@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import ua.gladiator.libraryapp.security.JwtConfigurer;
 import ua.gladiator.libraryapp.security.JwtProvider;
 
 @Configuration
@@ -44,8 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()//todo check for js and css
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ;
-               /* .and()
+
+                .and()
 
                 .authorizeRequests()
 
@@ -55,6 +56,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtProvider));*/
+                .apply(new JwtConfigurer(jwtProvider));
     }
 }

@@ -36,5 +36,5 @@
   "message.takedead": "Take date: $1<br>Return deadline: $1",
   "message.nameauthor": "Book name: $1<br>Author: $1",
   "message.returndate": "Return date: $1",
-  "message.emailphone": "Reader email: $1<br>Reader phone: $1"
+  "message.emailphone": "Reader email: $1<br>Reader phone: ($1)$1"
 }

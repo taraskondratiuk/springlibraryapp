@@ -46,10 +46,10 @@ $(function () {
     //get takes
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8089/lib/takes',
+        url: 'http://localhost:8089/lib/takes/my',
         success: function (takesPage) {
 
-            let url = 'http://localhost:8089/lib/takes?';
+            let url = 'http://localhost:8089/lib/takes/my?';
             placeTakes(takesPage, url);
 
         }

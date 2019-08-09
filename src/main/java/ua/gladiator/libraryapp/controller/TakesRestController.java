@@ -11,7 +11,6 @@ import ua.gladiator.libraryapp.model.service.impl.UserServiceImpl;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.*;
 
 @RestController
 @RequestMapping("/takes")
@@ -25,9 +24,10 @@ public class TakesRestController {
 
 
     @GetMapping(path = "/my")
-    public ResponseEntity<List<Take>> getMyTakes() {
+    public ResponseEntity<Page<Take>> getMyTakes(@RequestParam(required = false, defaultValue = "") Boolean returned,
+                                                 @RequestParam(required = false, defaultValue = "1") Integer page) {
         //todo
-        return new ResponseEntity<>(takeServiceImpl.getActiveTakesByUserId(userServiceImpl.getCurrentUser().getId()), HttpStatus.OK);
+        return new ResponseEntity<>(takeServiceImpl.getFilteredTakes(returned, userServiceImpl.getCurrentUser().getId(), "", page), HttpStatus.OK);
     }
 
 
@@ -46,8 +46,7 @@ public class TakesRestController {
     }
 
     @PostMapping
-    public ResponseEntity<List<Take>> takeBook(@Valid @RequestBody Book book) {
-        takeServiceImpl.takeBook(userServiceImpl.getCurrentUser(), book);
-        return new ResponseEntity<>(takeServiceImpl.getActiveTakesByUserId(userServiceImpl.getCurrentUser().getId()), HttpStatus.OK);
+    public ResponseEntity<Take> takeBook(@Valid @RequestBody Book book) {
+        return new ResponseEntity<>(takeServiceImpl.takeBook(userServiceImpl.getCurrentUser(), book), HttpStatus.OK);
     }
 }

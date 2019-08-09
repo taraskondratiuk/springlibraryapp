@@ -34,6 +34,10 @@ public class User {
     @Column(name = "phone_number", unique = true)
     private Integer phoneNumber;
 
+    @NotNull
+    @Basic(optional = false)
+    @Column(name = "country_code")
+    private Integer countryCode;
 
     @Basic(optional = false)
     private String password;
@@ -72,5 +76,9 @@ public class User {
     @JsonIgnore
     public Set<Take> getTakes() {
         return takes;
+    }
+
+    public Integer getCountryCode() {
+        return countryCode;
     }
 }

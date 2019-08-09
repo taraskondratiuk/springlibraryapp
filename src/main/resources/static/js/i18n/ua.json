@@ -36,5 +36,5 @@
   "message.takedead": "Дата видачі: $1<br>Крайній термін повернення: $1",
   "message.nameauthor": "Назва: $1<br>Автор: $1",
   "message.returndate": "Дата повернення: $1",
-  "message.emailphone": "Пошта читача: $1<br>Телефон читача: $1"
+  "message.emailphone": "Пошта читача: $1<br>Телефон читача: ($1)$1"
 }

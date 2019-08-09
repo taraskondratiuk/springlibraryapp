@@ -32,7 +32,7 @@ $(function () {
         '{{#isReturned}}' +
         '<h3 class="translate" data-args="messagae.returndate,{{returnDeadline}}">Return date: {{returnDate}}</h3>' +
         '{{/isReturned}}' +
-        '<h3 class="translate" data-args="message.emailphone,{{user.email}},{{user.phoneNumber}}">Reader email: {{user.email}}<br>Reader phone: {{user.phoneNumber}}</h3>' +
+        '<h3 class="translate" data-args="message.emailphone,{{user.email}},{{user.countryCode}},{{user.phone}}">Reader email: {{user.email}}<br>Reader phone: {{user.phoneNumber}}</h3>' +
         '</div>' +
         '</div>';
 

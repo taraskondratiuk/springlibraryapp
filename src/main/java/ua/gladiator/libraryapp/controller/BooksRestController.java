@@ -28,6 +28,7 @@ public class BooksRestController {
                                                          @RequestParam(required = false, defaultValue = "1") Integer page) {
         return new ResponseEntity<>(bookServiceImpl.getBooksByParams(attributes, line, author, page), HttpStatus.OK);
     }
+
     @PostMapping
     public ResponseEntity<Book> addBook(@Valid @RequestBody BookDto bookDto) {
         return new ResponseEntity<>(bookServiceImpl.addBook(bookDto), HttpStatus.OK);

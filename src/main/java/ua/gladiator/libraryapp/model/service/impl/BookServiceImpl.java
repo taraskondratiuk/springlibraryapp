@@ -96,8 +96,4 @@ public class BookServiceImpl {
                 line,
                 pageable);
     }
-
-    public Book addBookDto(BookDto bookDto) {
-        return null;
-    }
 }

@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getCurrentUser() {
         //todo
-        return userRepository.getOne(1L);
+        return userRepository.getOne(3L);
     }
 
     @Override
