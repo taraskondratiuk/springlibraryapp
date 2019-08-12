@@ -1,5 +1,6 @@
 package ua.gladiator.libraryapp.model.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,7 @@ import ua.gladiator.libraryapp.model.service.TakeService;
 import javax.annotation.Resource;
 import java.time.LocalDate;
 
+@Slf4j
 @Service
 public class TakeServiceImpl implements TakeService {
 
@@ -45,6 +47,7 @@ public class TakeServiceImpl implements TakeService {
             book.setIsAvailable(true);
             bookRepository.save(book);
 
+            log.info("take {} returned", take);
             return takeRepository.save(take);
         }
         else throw new JwtAuthenticationException();

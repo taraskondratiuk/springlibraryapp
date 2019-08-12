@@ -1,5 +1,6 @@
 package ua.gladiator.libraryapp.model.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +16,6 @@ import ua.gladiator.libraryapp.model.exception.BookNotFoundException;
 import ua.gladiator.libraryapp.model.repository.AttributeRepository;
 import ua.gladiator.libraryapp.model.repository.BookRepository;
 import ua.gladiator.libraryapp.model.repository.TakeRepository;
-import ua.gladiator.libraryapp.model.repository.UserRepository;
 import ua.gladiator.libraryapp.model.service.BookService;
 
 import javax.annotation.Resource;
@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.*;
 
+@Slf4j
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -35,8 +36,6 @@ public class BookServiceImpl implements BookService {
     @Resource
     private TakeRepository takeRepository;
 
-    @Resource
-    private UserRepository userRepository;
 
     @Value("${page.size.books}")
     private Integer DEFAULT_BOOKS_PAGE_SIZE;
@@ -71,11 +70,13 @@ public class BookServiceImpl implements BookService {
                 .user(user)
                 .book(oldBook)
                 .build());
+        log.info("book {} taken", oldBook);
             return bookRepository.save(oldBook);
     }
 
     public void deleteBookById(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        log.info("book {} deleted", book);
         bookRepository.delete(book);
     }
 

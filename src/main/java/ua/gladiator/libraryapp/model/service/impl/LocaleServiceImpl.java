@@ -1,5 +1,6 @@
 package ua.gladiator.libraryapp.model.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import ua.gladiator.libraryapp.model.service.LocaleService;
 import java.io.FileReader;
 import java.io.IOException;
 
+@Slf4j
 @Service
 public class LocaleServiceImpl implements LocaleService {
 
@@ -26,6 +28,7 @@ public class LocaleServiceImpl implements LocaleService {
             return jsonParser.parse(reader);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
+            log.error("invalid locale request {}", locale);
             throw new LocaleException();
         }
     }

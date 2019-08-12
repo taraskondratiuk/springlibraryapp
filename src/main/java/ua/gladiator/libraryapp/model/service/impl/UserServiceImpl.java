@@ -1,5 +1,6 @@
 package ua.gladiator.libraryapp.model.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import ua.gladiator.libraryapp.security.JwtProvider;
 import javax.annotation.Resource;
 import java.util.*;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -51,6 +53,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
             throw new EmailAlreadyExistsException();
         }
+        log.info("new user {} registered", user);
         return userRepository.save(user);
     }
 }

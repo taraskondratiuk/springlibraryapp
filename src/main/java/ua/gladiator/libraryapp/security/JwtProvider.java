@@ -1,6 +1,7 @@
 package ua.gladiator.libraryapp.security;
 
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.*;
 
+@Slf4j
 @Component
 public class JwtProvider {
 
@@ -78,13 +80,13 @@ public class JwtProvider {
 
             return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
+            log.error("invalid token");
             throw new JwtAuthenticationException();
         }
     }
 
 
     private List<String> getRoleNames(List<Role> userRoles) {
-        //todo test
         return userRoles.stream().map(Role::getName).collect(Collectors.toList());
     }
 
