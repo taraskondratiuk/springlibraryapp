@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Library</title>
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+<section class="section-1 head_wrapper">
+    <header class="header container">
+        <div class="headline row ">
+            <div class="logo col-lg-2">
+                <img class="logo-img" src="static/sources/book-logo.png" alt="logo">
+            </div>
+            <div class="head_info col-lg-12">
+                <h1 class="translate" data-args="message.title"></h1>
+            </div>
+            <div class="col-lg-2 langs">
+                <div class="switch-locale lang-images">
+                    <a href="#" data-locale="en"><img src="static/sources/us-flag.png" alt="en"></a>
+                    <a href="#" data-locale="ua"><img src="static/sources/ua-flag.png" alt="ua"></a></div>
+                <a href="/logout">
+                    <button type="button" class="btn btn-info btn-sm logout-button translate"
+                            data-args="message.logout">
+
+                    </button>
+                </a>
+            </div>
+        </div>
+        <nav class="navigation">
+
+            <div class="row menu_row">
+
+                <div class="col-lg-offset-6 col-lg-2 menu-item center-text">
+                    <a class="nav-link" href="file:///D:/1PROGA/libraryapp/src/main/resources/reader/books.html"><h3 class="translate" data-args="message.mainpage"></h3></a>
+                </div>
+                <div class="col-lg-2  menu-item center-text">
+                    <a class="nav-link" href="#"><h3 class="translate" data-args="message.stats"></h3></a>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+</section>
+
+<section class="page-wrapper container">
+
+    <div class="takes-filter col-lg-offset-5 col-lg-6 mgtop-container login-form">
+        <form class="form-horizontal filter-form reg-form col-lg-16">
+
+            <div class="form-group col-lg-16 input-field-my">
+                <div class="col-lg-16">
+                    <h3 class="translate center-text" data-args="message.register"></h3>
+                </div>
+            </div>
+            <div class="form-group col-lg-16 input-field-my">
+                <div class="col-lg-16">
+                    <input id="email" name="email" type="email" class="form-control input-md" required placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group col-lg-16 input-field-my">
+                <div class="col-lg-4">
+
+                    <input id="phone-code" name="code" type="number" class="form-control input-md" minlength="2" required placeholder="Code">
+                </div>
+
+                <div class="col-lg-12">
+                    <input id="phone-num" name="email" type="number" class="form-control input-md" minlength="5"  required placeholder="Phone number">
+                </div>
+            </div>
+            <div class="form-group col-lg-16 input-field-my">
+                <div class="col-lg-16">
+                    <input id="password" name="password" type="password" class="form-control input-md" minlength="6" required placeholder="Password">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-4 control-label" for="reg-button"></label>
+                <div class="center col-lg-16">
+                    <button  id="reg-button" type="submit" class="btn btn-info translate" data-args="message.confirm"></button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</section>
+
+<footer class="footer">
+    <div class="foot container">
+        <div class="footer_info col-lg-4 ">
+            <ul>
+                <li class="translate bold" data-args="message.address"></li>
+                <li class="translate" data-args="message.kyiv"></li>
+                <li class="translate" data-args="message.street"></li>
+            </ul>
+        </div>
+        <div class="footer_info col-lg-4 ">
+            <ul>
+                <li class="translate bold" data-args="message.cont"></li>
+                <li class="translate" data-args="message.phone1"></li>
+                <li class="translate" data-args="message.phone2"></li>
+            </ul>
+        </div>
+        <div class="footer_info col-lg-4 ">
+            <ul>
+                <li class="translate bold" data-args="message.sponsors"></li>
+                <li class="translate" data-args="message.sponsor1"></li>
+                <li class="translate" data-args="message.sponsor2"></li>
+            </ul>
+        </div>
+        <div class="footer_info col-lg-4 ">
+            <ul>
+
+                <li class="translate bold" data-args="message.inc"></li>
+                <li class="translate bold" data-args="message.allrr"></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="static/js/lib/jquery-3.4.1.min/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="static/js/lib/mustache.min/mustache.min.js"></script>
+
+<script type="text/javascript" src="static/js/lib/CLDRPluralRuleParser/CLDRPluralRuleParser.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.messagestore.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.fallbacks.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.language.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.parser.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.emitter.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
+<script type="text/javascript" src="static/js/lib/history/jquery.history.js"></script>
+<script type="text/javascript" src="static/js/lib/url/url.min.js"></script>
+<script type="text/javascript" src="static/js/lib/jquery.validate.js/jquery.validate.js"></script>
+
+<script type="text/javascript" src="static/js/lib/js-cookie/js.cookie.js"></script>
+<script type="text/javascript" src="static/js/register.js"></script>
+<script type="text/javascript" src="static/js/locale.js"></script>
+</body>
+
+
+
+</html>

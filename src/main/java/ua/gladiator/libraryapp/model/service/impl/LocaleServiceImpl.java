@@ -5,12 +5,13 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.gladiator.libraryapp.model.exception.LocaleException;
+import ua.gladiator.libraryapp.model.service.LocaleService;
 
 import java.io.FileReader;
 import java.io.IOException;
 
 @Service
-public class LocaleServiceImpl {
+public class LocaleServiceImpl implements LocaleService {
 
     @Value("${locale.path}")
     private String LOCALE_PATH;

@@ -43,7 +43,7 @@ $(function () {
     const addAttributeTemplate = '' +
         '<div class="checkbox">' +
         '<label>' +
-        '<input class="addBookAttribute" type="checkbox" data-id="{{id}}" name="addBookAttribute" value="{{name}}">' +
+        '<input class="addBookAttribute {atts: true}" type="checkbox" data-id="{{id}}" name="addBookAttribute" value="{{name}}">' +
         '{{name}}' +
         '</label>' +
         '</div>';
@@ -78,15 +78,25 @@ $(function () {
         '</div>';
 
 
+    $('.add-form').validate();
+
+
+    $('.add-att-form').validate();
     //get books
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8089/lib/books',
+        headers: {
+            'Authorization': localStorage.getItem('token')
+        },
         success: function (booksPage) {
 
             let url = 'http://localhost:8089/lib/books?';
             placeBooks(booksPage, url);
 
+        },
+        error: function () {
+            alert(localStorage.getItem('token'));
         }
     });
 
@@ -104,13 +114,12 @@ $(function () {
                 arr.push(i);
             }
             addOptions(arr);
-
-
         }
     });
 
 
     $pager.on('click', '.pageBtn', function () {
+
         let url = $(this).attr('url');
 
         $.ajax({
@@ -127,61 +136,66 @@ $(function () {
     });
 
     $addBook.on('click', function () {
+        if ($('.add-form').valid()) {
+            let attArr = [];
 
-        let attArr = [];
+            $.each($("input[name='addBookAttribute']:checked"), function () {
+                attArr.push($(this).val());
+            });
 
-        $.each($("input[name='addBookAttribute']:checked"), function () {
-            attArr.push($(this).val());
-        });
+            let book = {
+                name: $name.val(),
+                text: $text.val(),
+                daysToReturn: $daysToReturn.val(),
+                picUrl: $picUrl.val(),
+                author: $addAuthor.val(),
+                attributes: attArr
+            };
 
-        let book = {
-            name: $name.val(),
-            text: $text.val(),
-            daysToReturn: $daysToReturn.val(),
-            picUrl: $picUrl.val(),
-            author: $addAuthor.val(),
-            attributes: attArr
-        };
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8089/lib/books',
+                data: JSON.stringify(book),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (newBook) {
+                    if (newBook.picUrl === '') {
+                        newBook.picUrl = '../static/sources/q-mark.png';
+                    }
 
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:8089/lib/books',
-            data: JSON.stringify(book),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (newBook) {
-                if (newBook.picUrl === '') {
-                    newBook.picUrl = '../static/sources/q-mark.png';
+                    $books.prepend(Mustache.render(bookTemplate, newBook));
+                    $books.children().last().hide();
+                },
+                error: function () {
+                    alert('error')
                 }
+            });
+        }
 
-                $books.prepend(Mustache.render(bookTemplate, newBook));
-                $books.children().last().hide();
-            },
-            error: function () {
-                alert('error')
-            }
-        });
 
     });
 
     $addAttribute.on('click', function () {
+        if ($('.add-att-form').valid()) {
+            let attribute = {
+                name: $newAttribute.val()
+            };
 
-        let attribute = {
-            name: $newAttribute.val()
-        };
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8089/lib/attributes',
+                data: attribute,
+                success: function (newAttribute) {
+                    addFilterAttribute(newAttribute);
+                    addAddAttribute(newAttribute);
+                },
+                error: function () {
+                    alert('error')
+                }
+            });
+        }
 
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:8089/lib/attributes',
-            data: attribute,
-            success: function (newAttribute) {
-                addFilterAttribute(newAttribute);
-                addAddAttribute(newAttribute);
-            },
-            error: function () {
-                alert('error')
-            }
-        });
+
 
     });
 

@@ -96,13 +96,13 @@
             <div id="pager">
 
             </div>
-            <div class="add-form col-lg-12  mgtop-container">
+            <form class="add-form col-lg-12  mgtop-container">
                 <h3 class="create-book center-text translate" data-args="message.create"></h3>
 
                 <div class="col-lg-4">
                     <div class="form-group col-lg-16">
                         <label for="name" class="translate" data-args="message.name"></label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" required class="form-control" id="name">
                     </div>
                     <div class="form-group col-lg-16">
                         <label for="add-author" class="translate" data-args="message.author"></label>
@@ -123,6 +123,7 @@
 
                     <div class="form-group add-attributes" >
 
+
                     </div>
 
 
@@ -131,25 +132,25 @@
                 <div class="col-lg-8">
                     <div class="form-group" >
                         <label for="text" class="translate" data-args="message.text"></label>
-                        <textarea cols="40" rows="10" id="text"></textarea>
+                        <textarea cols="40" rows="10" required id="text"></textarea>
 
-                        <button id="addBook" class="btn bin-default add-book-button add-book translate" data-args="message.add"></button>
+                        <button id="addBook" type="submit" class="btn bin-default add-book-button add-book translate" data-args="message.add"></button>
                     </div>
                 </div>
 
 
 
-            </div>
+            </form>
             <div class="add-form att-form mgtop-container col-lg-4 ">
             <h3 class="create-att center-text translate" data-args="message.createatt"></h3>
 
-            <div class="col-lg-16">
+            <form class="add-att-form  col-lg-16">
                 <div class="form-group col-lg-16">
                     <label for="name" class="translate" data-args="message.att"></label>
-                    <input type="text" class="form-control" id="new-attribute">
+                    <input type="text" class="form-control" required id="new-attribute">
                 </div>
-                <button id="add-attribute" class="btn bin-default add-att-button translate" data-args="message.add" ></button>
-            </div>
+                <button type="submit" id="add-attribute" class="btn bin-default add-att-button translate" data-args="message.add" ></button>
+            </form>
 
 
 
@@ -220,6 +221,9 @@
 <script type="text/javascript" src="../static/js/lib/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
 <script type="text/javascript" src="../static/js/lib/history/jquery.history.js"></script>
 <script type="text/javascript" src="../static/js/lib/url/url.min.js"></script>
+<script type="text/javascript" src="../static/js/lib/js-cookie/js.cookie.js"></script>
+<script type="text/javascript" src="../static/js/login.js"></script>
+<script type="text/javascript" src="../static/js/lib/jquery.validate.js/jquery.validate.js"></script>
 
 <script type="text/javascript" src="../static/js/admin/books.js"></script>
 <script type="text/javascript" src="../static/js/locale.js"></script>

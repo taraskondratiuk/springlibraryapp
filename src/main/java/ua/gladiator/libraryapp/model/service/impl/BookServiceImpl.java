@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import ua.gladiator.libraryapp.model.entity.Attribute;
 import ua.gladiator.libraryapp.model.entity.Book;
 import ua.gladiator.libraryapp.model.entity.Take;
+import ua.gladiator.libraryapp.model.entity.User;
 import ua.gladiator.libraryapp.model.entity.dto.BookDto;
 import ua.gladiator.libraryapp.model.exception.BookNotFoundException;
 import ua.gladiator.libraryapp.model.repository.AttributeRepository;
 import ua.gladiator.libraryapp.model.repository.BookRepository;
 import ua.gladiator.libraryapp.model.repository.TakeRepository;
 import ua.gladiator.libraryapp.model.repository.UserRepository;
+import ua.gladiator.libraryapp.model.service.BookService;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
@@ -22,7 +24,7 @@ import java.util.*;
 import java.util.stream.*;
 
 @Service
-public class BookServiceImpl {
+public class BookServiceImpl implements BookService {
 
     @Resource
     private AttributeRepository attributeRepository;
@@ -54,21 +56,19 @@ public class BookServiceImpl {
                 .build());
     }
 
-    public Book takeBook(Long id) {
+    public Book takeBook(Long id, User user) {
         Book oldBook = bookRepository
                 .findByIdAndIsAvailableTrue(id)
                 .orElseThrow(BookNotFoundException::new);
 
 
             oldBook.setIsAvailable(false);
-            //todo add current user
-
 
         takeRepository.save(Take.builder()
                 .takeDate(LocalDate.now())
                 .isReturned(false)
                 .returnDeadline(LocalDate.now().plusDays(oldBook.getDaysToReturn()))
-                .user(userRepository.findById(3L).get())
+                .user(user)
                 .book(oldBook)
                 .build());
             return bookRepository.save(oldBook);

@@ -1,6 +1,7 @@
 package ua.gladiator.libraryapp.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -18,6 +19,7 @@ import java.util.Set;
 @ToString
 @Builder
 @Table(name = "books")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +30,9 @@ public class Book {
 
     @NotEmpty
     @Basic(optional = false)
+    @Column(unique = true)
     private String name;
 
-    //todo international db
     @NotEmpty
     @Basic(optional = false)
     @Lob

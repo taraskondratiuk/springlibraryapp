@@ -1,6 +1,7 @@
 package ua.gladiator.libraryapp.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,8 +10,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Setter
@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +32,7 @@ public class User {
 
     @NotNull
     @Basic(optional = false)
-    @Column(name = "phone_number", unique = true)
+    @Column(name = "phone_number")
     private Integer phoneNumber;
 
     @NotNull

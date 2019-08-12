@@ -41,6 +41,8 @@ public class AccountsRestController {
                         Map<Object, Object> response = new HashMap<>();
                         response.put("username", u.getEmail());
                         response.put("token", token);
+                        response.put("role", u.getRoles().get(0).getName());
+
                         return ResponseEntity.ok(response);
                     }).orElseThrow(UserNotFoundException::new);
 
@@ -52,8 +54,6 @@ public class AccountsRestController {
 
     @PostMapping("/registration")
     public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
-
-        System.out.println(user);
         return new ResponseEntity<>(userService.registerUser(user), HttpStatus.CREATED);
     }
 }

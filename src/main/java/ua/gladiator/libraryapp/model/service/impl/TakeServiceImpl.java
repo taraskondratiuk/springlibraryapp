@@ -9,15 +9,17 @@ import org.springframework.stereotype.Service;
 import ua.gladiator.libraryapp.model.entity.Book;
 import ua.gladiator.libraryapp.model.entity.Take;
 import ua.gladiator.libraryapp.model.entity.User;
+import ua.gladiator.libraryapp.model.exception.JwtAuthenticationException;
 import ua.gladiator.libraryapp.model.exception.TakeNotFoundException;
 import ua.gladiator.libraryapp.model.repository.BookRepository;
 import ua.gladiator.libraryapp.model.repository.TakeRepository;
+import ua.gladiator.libraryapp.model.service.TakeService;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
 
 @Service
-public class TakeServiceImpl {
+public class TakeServiceImpl implements TakeService {
 
     @Value("${page.size.takes}")
     private Integer DEFAULT_TAKE_PAGE_SIZE;
@@ -29,25 +31,25 @@ public class TakeServiceImpl {
     private BookRepository bookRepository;
 
 
-
-    //todo throw exc
-
-    public Take makeTakeReturned(Long id) {
+    public Take makeTakeReturned(Long id, User user) {
 
         Take take = takeRepository.findById(id)
                 .orElseThrow(TakeNotFoundException::new);
 
-        take.setIsReturned(true);
-        take.setReturnDate(LocalDate.now());
+        if (take.getUser().equals(user)) {
+            take.setIsReturned(true);
+            take.setReturnDate(LocalDate.now());
 
-        Book book = take.getBook();
+            Book book = take.getBook();
 
-        book.setIsAvailable(true);
-        bookRepository.save(book);
+            book.setIsAvailable(true);
+            bookRepository.save(book);
 
-        return takeRepository.save(take);
+            return takeRepository.save(take);
+        }
+        else throw new JwtAuthenticationException();
     }
-//todo test expire date
+
     public Take takeBook(User currentUser, Book book) {
 
         Take newTake = Take

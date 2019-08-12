@@ -4,13 +4,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.gladiator.libraryapp.model.entity.User;
+import ua.gladiator.libraryapp.model.exception.EmailAlreadyExistsException;
+import ua.gladiator.libraryapp.model.exception.UserNotFoundException;
 import ua.gladiator.libraryapp.model.repository.RoleRepository;
 import ua.gladiator.libraryapp.model.repository.UserRepository;
 import ua.gladiator.libraryapp.model.service.UserService;
+import ua.gladiator.libraryapp.security.JwtProvider;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,18 +23,20 @@ public class UserServiceImpl implements UserService {
     @Resource
     private RoleRepository roleRepository;
 
+    @Resource
+    private JwtProvider jwtProvider;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-        //fixme
     }
 
 
 
     @Override
-    public User getCurrentUser() {
-        //todo
-        return userRepository.getOne(3L);
+    public User getUserByToken(String token) {
+        String email = jwtProvider.getEmail(token.replace("Bearer_", ""));
+        return userRepository.findUserByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
@@ -42,9 +46,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(User user) {
-        //todo throw exc if already exist
         user.setRoles(Collections.singletonList(roleRepository.findByName("READER")));
         user.setPassword(passwordEncoder().encode(user.getPassword()));
+        if (userRepository.findUserByEmail(user.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException();
+        }
         return userRepository.save(user);
     }
 }
